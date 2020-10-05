@@ -8,6 +8,8 @@ import matplotlib.pyplot as plot
 from itertools import combinations
 
 
+STEP=0.1 # шаг областей гистограммы
+
 def simple_init_gen(func):
     # Декоратор для простой инициации генератора
     def init_gen(*args,**kwargs):
@@ -17,7 +19,7 @@ def simple_init_gen(func):
     return init_gen
 
 @simple_init_gen
-def distribution_calc(STEP=0.1):
+def distribution_calc(step=0.1):
     # Генератор для подсчета распределения расстояния
     distribution = {}
     while True:
@@ -48,7 +50,7 @@ def find_dist(vectors_field):
     # Возвращает максимальное и минимальное значение в виде (значение, вектор_а, вектор_б),
     # Возвращает распределение в виде словаря {правая_граница_области:кол-во_расстояний_в_области}
     mm_calc = min_max_calc(len(vectors_field))
-    d_calc = distribution_calc()
+    d_calc = distribution_calc(STEP)
     print('Проводится расчет...')
     for vector_a, vector_b in combinations(vectors_field, 2):
         dist = numpy.linalg.norm(vector_a-vector_b)
@@ -59,7 +61,7 @@ def find_dist(vectors_field):
 def drow_histogramm(distribution):
     # Отрисовывает гистограмму
     x = sorted(distribution.keys())
-    y = [distribution[pos] for pos in x ]
+    y = [distribution[pos] for pos in x]
     fig, axs = plot.subplots()
     axs.bar(x, y)
     plot.show()
