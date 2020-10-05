@@ -7,7 +7,6 @@ import math
 import matplotlib.pyplot as plot
 from itertools import combinations
 
-
 STEP=0.1 # шаг областей гистограммы
 
 def simple_init_gen(func):
